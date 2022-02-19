@@ -518,13 +518,16 @@ function initGame(timestamp) {
     /* Debug */
     document.getElementById("debug-words-count").innerText = targets.length;
     document.getElementById("debug-target").innerText = rot13(target);
-    document.getElementById("debug-wordlist-index").innerText = getIndex(timestamp);
+//     document.getElementById("debug-wordlist-index").innerText = getIndex(timestamp);
+    document.getElementById("debug-wordlist-index").innerText = "";
     document.getElementById("debug-timestamp").innerText = timestamp;
     document.getElementById("debug-user-agent").innerText = navigator.userAgent;
 
     document.getElementById("debug-words-script").innerText = getCacheId("script", "words.js");
-    document.getElementById("footer").innerText = "main: " + getCacheId("script", "main.js") + ", words: " + getCacheId("script", "words.js") + ", index: " + getIndex(timestamp) + ", ts: " + timestamp;
+//     document.getElementById("footer").innerText = "main: " + getCacheId("script", "main.js") + ", words: " + getCacheId("script", "words.js") + ", index: " + getIndex(timestamp) + ", ts: " + timestamp;
+    document.getElementById("footer").innerText = "main: " + getCacheId("script", "main.js") + ", words: " + getCacheId("script", "words.js") + ", ts: " + timestamp;
 }
+
 
 
 function resetGame(timestamp) {
@@ -532,36 +535,48 @@ function resetGame(timestamp) {
     row = 0;
     guess = "";
     win = false;
-    target = targets[getIndex(timestamp)];
-    console.log(targets);
-    console.log("New target: " + target + "(" + timestamp + ")");
+    
+    var request = new XMLHttpRequest();
+    request.open('GET', "https://beta.wordle-deutsch.ch/get-word-of-the-day.php?timestamp=" + timestamp, false);  // `false` makes the request synchronous
+    request.send(null);
 
-    document.getElementById('duden-link1').href = "https://www.duden.de/suchen/dudenonline/" + target;
-    document.getElementById('duden-link2').href = "https://www.duden.de/suchen/dudenonline/" + target;
+    // TODO use async
 
-    if (window.location.href.includes("cheat")) {
-        console.log("Target: " + target);
-    }
+    if (request.status === 200) {
+//         console.log("request.responseText: " + request.responseText);
+        let data = JSON.parse(request.responseText);
+        
+        target = rot13(data["word"]);
+        
+//         console.log("New target: " + target + " (" + timestamp + ")");
 
-    for (const rowEl of board.children) {
-        for (const cell of rowEl.children) {
-            cell.classList.remove("filled");
-            cell.classList.remove("incorrect");
-            cell.classList.remove("close");
-            cell.classList.remove("correct");
-            cell.innerText = "";
+        document.getElementById('duden-link1').href = "https://www.duden.de/suchen/dudenonline/" + target;
+        document.getElementById('duden-link2').href = "https://www.duden.de/suchen/dudenonline/" + target;
+
+        if (window.location.href.includes("cheat")) {
+            console.log("Target: " + target);
         }
-    }
-    for (const keyID in keyboardEls) {
-        keyboardEls[keyID].classList.remove("incorrect");
-        keyboardEls[keyID].classList.remove("close");
-        keyboardEls[keyID].classList.remove("correct");
-    }
-    document.getElementById("end-container").classList.add("hide");
 
-    localStorage.setItem("target", rot13(target));
-    localStorage.setItem("timestamp", timestamp);
-    storeProgess();
+        for (const rowEl of board.children) {
+            for (const cell of rowEl.children) {
+                cell.classList.remove("filled");
+                cell.classList.remove("incorrect");
+                cell.classList.remove("close");
+                cell.classList.remove("correct");
+                cell.innerText = "";
+            }
+        }
+        for (const keyID in keyboardEls) {
+            keyboardEls[keyID].classList.remove("incorrect");
+            keyboardEls[keyID].classList.remove("close");
+            keyboardEls[keyID].classList.remove("correct");
+        }
+        document.getElementById("end-container").classList.add("hide");
+
+        localStorage.setItem("target", rot13(target));
+        localStorage.setItem("timestamp", timestamp);
+        storeProgess();
+    }
 }
 
 
