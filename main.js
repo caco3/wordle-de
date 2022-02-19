@@ -2,7 +2,30 @@
 import config from './config.js?cacheid=2';
 
 // ==== WORD LIST ====
-import words from './words.js?cacheid=2';
+var targets, others;
+
+async function loadJSON(filename, callback) {
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', filename, true);
+    xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+        // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+        callback(xobj.responseText);
+        }
+    };
+    xobj.send(null);
+}
+
+loadJSON("target-words.json", function(response) {
+    targets = JSON.parse(response)["data"];
+    main();
+});
+
+loadJSON("other-words.json", function(response) {
+    others = JSON.parse(response)["data"];
+    main();
+});
 
 
 // ==== VIEWPORT SIZE ====
@@ -326,7 +349,7 @@ function getTomorowsTimestamp() {
 
 function getIndex(timestamp) {
     let rand = mulberry32(timestamp);
-    let index = Math.floor(rand * words.targets.length);
+    let index = Math.floor(rand * targets.length);
 //     console.log("Todays Index: " + index);
     return index;
 }
@@ -388,7 +411,7 @@ function initRandomWord() {
     }
     else {
         console.log("Use pre-selected random word");
-        let randomTarget = words.targets[getIndex(randomTimestamp)];
+        let randomTarget = targets[getIndex(randomTimestamp)];
         loadGame(randomTarget);
     }
 
@@ -493,7 +516,7 @@ function initGame(timestamp) {
 
 
     /* Debug */
-    document.getElementById("debug-words-count").innerText = words.targets.length;
+    document.getElementById("debug-words-count").innerText = targets.length;
     document.getElementById("debug-target").innerText = rot13(target);
     document.getElementById("debug-wordlist-index").innerText = getIndex(timestamp);
     document.getElementById("debug-timestamp").innerText = timestamp;
@@ -509,8 +532,9 @@ function resetGame(timestamp) {
     row = 0;
     guess = "";
     win = false;
-    target = words.targets[getIndex(timestamp)];
-//     console.log("New target: " + target + "(" + timestamp + ")");
+    target = targets[getIndex(timestamp)];
+    console.log(targets);
+    console.log("New target: " + target + "(" + timestamp + ")");
 
     document.getElementById('duden-link1').href = "https://www.duden.de/suchen/dudenonline/" + target;
     document.getElementById('duden-link2').href = "https://www.duden.de/suchen/dudenonline/" + target;
@@ -817,7 +841,7 @@ document.addEventListener("keydown", e => {
         return;
     }
     if (key == "Enter") {
-        if (guess.length != config.wordLength || !(words.targets.includes(guess) || words.other.includes(guess))) {
+        if (guess.length != config.wordLength || !(targets.includes(guess) || others.includes(guess))) {
             board.children[row].classList.add("shake");
             setTimeout(() => board.children[row].classList.remove("shake"), 400);
             return;
@@ -848,7 +872,7 @@ document.addEventListener("keydown", e => {
 });
 
 
-// Automatically close all the other <details> tags after opening another <details> tag
+// Automatically close all the others <details> tags after opening anothers <details> tag
 // Kudos: https://stackoverflow.com/a/36994802/8369030
 const details = document.querySelectorAll("details");
 
@@ -865,5 +889,26 @@ details.forEach((targetDetail) => {
 });
 
 
-initGame(getTodaysTimestamp());
-updateShownStats();
+
+function main() {
+    if (targets == undefined) {
+//         console.log("target-words not loaded yet");
+        return;
+    }
+    else {
+//         console.log("target-words loaded");
+    }
+
+    if (others == undefined) {
+//         console.log("other-words not loaded yet");
+        return;
+    }
+    else {
+//         console.log("other-words loaded");
+    }
+
+//     console.log(targets);
+//     console.log(others);
+    initGame(getTodaysTimestamp());
+    updateShownStats();
+}
