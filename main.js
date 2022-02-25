@@ -342,8 +342,8 @@ function getTodaysTimestamp() {
 }
 
 
-function getTomorowsTimestamp() {
-    return getTodaysTimestamp() + 60*60*24;
+function getFutureTimestamp(days) {
+    return getTodaysTimestamp() + days * 60*60*24;
 }
 
 
