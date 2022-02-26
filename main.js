@@ -109,7 +109,7 @@ for (const [i, row] of KEYBOARD_LAYOUT.entries()) {
 }
 
 // ==== MODALS ====
-const statsContainer = document.getElementById("stats-container");
+const statsContainer = document.getElementById("settings-container");
 const endContainer = document.getElementById("end-container");
 const infoContainer = document.getElementById("info-container");
 const updateInfoContainer = document.getElementById("update-info-container");
@@ -148,7 +148,7 @@ document.getElementById("dismiss-info").addEventListener("click", ev => {
     ev.target.parentElement.parentElement.classList.add("hide");
 })
 
-document.getElementById("dismiss-stats").addEventListener("click", ev => {
+document.getElementById("dismiss-settings").addEventListener("click", ev => {
     ev.target.parentElement.parentElement.classList.add("hide");
 })
 
@@ -179,7 +179,7 @@ document.getElementById("start-normal1").addEventListener("click", ev => {
     window.location.href = "index.htm"; // Reload page
 });
 
-document.getElementById("stats-menu-start-wotd").addEventListener("click", ev => {
+document.getElementById("settings-menu-start-wotd").addEventListener("click", ev => {
     localStorage.setItem("random-mode", 0); // Switch to the normal mode on test page load
     window.location.href = "index.htm"; // Reload page
 });
@@ -196,19 +196,19 @@ document.getElementById("start-random2").addEventListener("click", ev => {
     window.location.href = "index.htm"; // Reload page
 });
 
-document.getElementById("stats-menu-start-random").addEventListener("click", ev => {
+document.getElementById("settings-menu-start-random").addEventListener("click", ev => {
     localStorage.setItem("random-mode", 1); // Switch to the random mode on test page load
 //     localStorage.setItem("random-timestamp", 0); // Trigger selection of a new random word
     window.location.href = "index.htm"; // Reload page
 });
 
 // ==== TOOLBAR BUTTONS ====
-document.getElementById("show-stats").addEventListener("click", ev => {
+document.getElementById("show-settings").addEventListener("click", ev => {
     statsContainer.classList.remove("hide");
     ev.target.blur();
 });
 
-document.getElementById("show-stats2").addEventListener("click", ev => {
+document.getElementById("show-statistics").addEventListener("click", ev => {
     statsContainer.classList.remove("hide");
     ev.target.blur();
 });
@@ -223,7 +223,7 @@ document.getElementById("dismiss-end").addEventListener("click", ev => {
     ev.target.blur();
 });
 
-document.getElementById("dismiss-stats").addEventListener("click", ev => {
+document.getElementById("dismiss-settings").addEventListener("click", ev => {
     statsContainer.classList.add("hide");
     ev.target.blur();
 });
@@ -497,7 +497,7 @@ function initGame() {
         }
 
         document.body.style.backgroundColor = "#0064ab"; // Change background color
-//         document.getElementById("stats-menu-start-wotd").classList.remove("hide");
+//         document.getElementById("settings-menu-start-wotd").classList.remove("hide");
     }   
 
     else { // Word of the day
@@ -545,14 +545,14 @@ function initGame() {
     document.getElementById("credit-points3").innerText = creditPoints;
 
     if (gameMode == "word-of-the-day") {
-        document.getElementById("stats-menu-current-game-mode").innerText = "Wort-des-Tages";
-        document.getElementById("stats-menu-start-random").classList.remove("hide");
-        document.getElementById("stats-menu-start-wotd").classList.add("hide");
+        document.getElementById("settings-menu-current-game-mode").innerText = "Wort-des-Tages";
+        document.getElementById("settings-menu-start-random").classList.remove("hide");
+        document.getElementById("settings-menu-start-wotd").classList.add("hide");
     }
     else { // Random
-        document.getElementById("stats-menu-current-game-mode").innerText = "Zufälliges Wort";
-        document.getElementById("stats-menu-start-random").classList.add("hide");
-        document.getElementById("stats-menu-start-wotd").classList.remove("hide");
+        document.getElementById("settings-menu-current-game-mode").innerText = "Zufälliges Wort";
+        document.getElementById("settings-menu-start-random").classList.add("hide");
+        document.getElementById("settings-menu-start-wotd").classList.remove("hide");
     }
 
     if (localStorage.getItem("cheat") == 1) {
