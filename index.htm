@@ -91,28 +91,36 @@
     <div id="settings-container" class="container hide">
         <span class="popup">
             <div id="dismiss-settings" class="close-button">&#10062;</div>
-            <div id="god-menu" class="hide">
-                <h2>Godly Options</h2>
+            <details id="god-menu" class="hide">
+                <summary><strong>Admin Options</strong></summary>
                 <p><a href="index.htm?tomorrow">Use the Word of tomorrow</a></p>
                 <p><a href="index.htm?cheat">Show secret word in console</a></p>
                 <p><a href="debug.htm" target=_blank>Show local storage</a></p>
-            </div>
+            </details>
         
-            <h2>Modus</h2>
-            <p>Aktueller Modus: <strong>"<span id="settings-menu-current-game-mode"></span>"</strong>.</p>
-            <p>Umschalten auf: </p>
-            <button class="day" id="settings-menu-start-wotd">Wort-des-Tages</button>
-            <p></p>
-            <button class="random" id="settings-menu-start-random">Zuf&auml;lliges Wort</button>
-            <p>Du hast <span id="credit-points3"></span> Punkte verf&uuml;gbar, um ein neues zuf&auml;lliges Wort zu l&ouml;sen!</p>
-            <p></p>
-
-            <h2>&#127937; Statistik</h2>
-            <p><strong>Siege:</strong> <span id="wins"></span> (<span id="wins-percent"></span>%) in <span id="games-total"></span> Spielen.</p>
-
-            <p><strong>Siege nach Zeilen:</strong>
-            <canvas id="statsChart" width="100%" height="60"></canvas>
-            <p></p>
+            <details open>
+                <summary><strong>Modus</strong></summary>
+                <p>Aktueller Modus: <strong>"<span id="settings-menu-current-game-mode"></span>"</strong>.</p>
+                <p>Umschalten auf: </p>
+                <button class="day" id="settings-menu-start-wotd">Wort-des-Tages</button>
+                <p></p>
+                <button class="random" id="settings-menu-start-random">Zuf&auml;lliges Wort</button>
+                <p>Du hast <span id="credit-points3"></span> Punkte verf&uuml;gbar, um ein neues zuf&auml;lliges Wort zu l&ouml;sen!</p>
+            </details>
+            <details>
+                <summary><strong>Optionen</strong></summary>
+                <p>
+                    <label for="fast-mode"><input type="checkbox" id="fast-mode">Animationen auschalten.</label>
+                    <br>
+                    <span class="small">Zeigt das Feedback schneller an.</span>
+                </p>
+            </details>
+            <details>
+                <summary><strong>Statistik</strong></summary>
+                <p><strong>Siege:</strong> <span id="wins"></span> (<span id="wins-percent"></span>%) in <span id="games-total"></span> abgeschlossenen Spielen.</p>
+                <p><strong>Siege nach Zeilen:</strong>
+                <canvas id="statsChart" width="100%" height="60"></canvas>
+            </details>
         </span>
     </div>
 
@@ -155,13 +163,6 @@
                     Sie kommen im Wort-des-Tages nicht vor.</p>
                 <p><strong>Im Beispiel lautet das Wort "BRAUN".</strong></p>
             </details>
-            <details>
-                <summary><strong>Optionen</strong></summary>
-                <p>
-                    <label for="fast-mode"><input type="checkbox" id="fast-mode">Animationen auschalten.</label>
-                    <br>
-                    <span class="small">Zeigt das Feedback schneller an.</span>
-                </p>
             </details>
             <details>
                 <summary><strong>Punkte und Statistik</strong></summary>
