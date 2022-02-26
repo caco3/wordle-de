@@ -123,7 +123,7 @@ const infoContainer = document.getElementById("info-container");
 const updateInfoContainer = document.getElementById("update-info-container");
 
 
-let lastUpdateNote = "2022-02-12"; // Set to today on news updates
+let lastUpdateNote = "2022-02-26"; // Set to today on news updates
 if (window.localStorage.getItem("read-update-note") != lastUpdateNote && window.localStorage.getItem("read-help")) { // Show updates, but only if the help does not get shown
     updateInfoContainer.classList.remove("hide");
     window.localStorage.setItem("read-update-note", lastUpdateNote);
