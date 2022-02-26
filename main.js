@@ -50,6 +50,14 @@ function getLocalStorageInt(key) {
     return value;
 }
 
+function selectColorMode() {
+    if (window.localStorage.getItem("colorblind-mode") == "true") {
+        document.getElementById("colorblind-style").href = "colorblind.css"
+    } else {
+        document.getElementById("colorblind-style").href = ""
+    }
+}
+
 
 // ==== GAME BOARD ====
 const board = document.getElementById("board");
@@ -246,14 +254,24 @@ if (window.localStorage.getItem("fast-mode") == "true") {
     animTime = 0;
 }
 
+if (window.localStorage.getItem("colorblind-mode") == "true") {
+    document.getElementById("colorblind-mode").checked = true;
+}
+
 document.getElementById("fast-mode").addEventListener("change", ev => {
     window.localStorage.setItem("fast-mode", ev.target.checked);
     if (ev.target.checked) {
         animTime = 0;
-    } else {
+    }
+    else {
         animTime = 300;
     }
-    console.log(animTime);
+    console.log("New Animation time: " + animTime);
+})
+
+document.getElementById("colorblind-mode").addEventListener("change", ev => {
+    window.localStorage.setItem("colorblind-mode", ev.target.checked);
+    selectColorMode();
 })
 
 // ==== GAME LOGIC ====
@@ -562,6 +580,8 @@ function initGame() {
     document.getElementById("end-container").classList.add("hide");
 
     storeProgess();
+
+    selectColorMode();
 
     /* Debug */
     document.getElementById("debug-words-count").innerText = targets.length;

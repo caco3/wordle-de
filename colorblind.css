@@ -1,0 +1,37 @@
+ 
+.cell.incorrect {
+    background: #bA0;
+    --front: #777;
+    --highlight: #BBB;
+    --shadow: #999;
+}
+
+.cell.close {
+    background: #fCf;
+    --front: #C80;
+    --highlight: #FD2;
+    --shadow: #EA0;
+}
+
+.cell.correct {
+    background: #bC0;
+    --front: #2A2;
+    --highlight: #6E0;
+    --shadow: #3B0;
+}
+
+
+.key.incorrect {
+    background: #888;
+    color: white;
+}
+
+.key.close {
+    background: #FC0;
+    color: #444;
+}
+
+.key.correct {
+    background: #5C0;
+    color: #444;
+}
