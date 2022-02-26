@@ -567,11 +567,11 @@ function initGame() {
     document.getElementById("debug-words-count").innerText = targets.length;
     document.getElementById("debug-target").innerText = rot13(target);
 //     document.getElementById("debug-wordlist-index").innerText = getIndex(timestamp);
-    document.getElementById("debug-wordlist-index").innerText = "";
-//     document.getElementById("debug-timestamp").innerText = timestamp;
+//     document.getElementById("debug-wordlist-index").innerText = "";
+    document.getElementById("debug-timestamp").innerText = timestamp;
     document.getElementById("debug-user-agent").innerText = navigator.userAgent;
 
-    document.getElementById("debug-words-script").innerText = getCacheId("script", "words.js");
+//     document.getElementById("debug-words-script").innerText = getCacheId("script", "words.js");
 //     document.getElementById("footer").innerText = "main: " + getCacheId("script", "main.js") + ", words: " + getCacheId("script", "words.js") + ", index: " + getIndex(timestamp) + ", ts: " + timestamp;
 //     document.getElementById("footer").innerText = "main: " + getCacheId("script", "main.js") + ", words: " + getCacheId("script", "words.js") + ", ts: " + timestamp;
 //     document.getElementById("footer").innerText = "main: " + getCacheId("script", "main.js") + ", words: " + getCacheId("script", "words.js");
