@@ -508,8 +508,8 @@ function initGame() {
                 console.log("Use pre-selected random word");
                 loadGame();   
 
-                /* If we have a completed random game, reset it */
-                console.log(win, lose);
+//                 /* If we have a completed random game, reset it */
+//                 console.log(win, lose);
                 if ((win == true) || (lose == true)) { // The previous random game got completed (won or losed), start a new one
                     localStorage.setItem("random-timestamp", 0); // Invalidate target to make sure the game gets reset
                     window.location.href = "index.htm"; // reload page
@@ -652,7 +652,7 @@ function loadGame() {
 
     for (let r = 0; r < config.maxGuesses; r++) {
         let rowTextFromStore = localStorage.getItem(gameMode + "_" + "row" + r);
-        console.log("line for row " + r + " loaded from store: " + rowTextFromStore + ", len: " + rowTextFromStore.length);
+        console.log("line for row " + r + " loaded from store: '" + rowTextFromStore + "', len: " + rowTextFromStore.length);
         if (rowTextFromStore != null && rowTextFromStore != "") {
             guess = rowTextFromStore.toLowerCase();
             let scores = scoreGuess(target, guess);
@@ -685,7 +685,7 @@ function loadGame() {
     }
     
     row = getLocalStorageInt(gameMode + "_" + "row");
-    console.log("loadGame, row: " + row);
+//     console.log("loadGame, row: " + row);
 }
 
 
@@ -765,7 +765,7 @@ function updateShownStats() {
 
 
 function evaluate() {
-    console.log("evaluate, target: " + target, ", guess: " + guess, ", row: ", row);
+//     console.log("evaluate, target: " + target, ", guess: " + guess, ", row: ", row);
     scoring = true;
     setTimeout(() => scoring = false, animTime * 4);
     let scores = scoreGuess(target, guess);
