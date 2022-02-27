@@ -806,6 +806,7 @@ function processWinLose() {
             document.getElementById("won-random-word1").classList.add("hide");
             document.getElementById("footer-word-of-the-day").classList.remove("hide");
             document.getElementById("footer-random-word").classList.add("hide");
+            document.getElementById("show-statistics").classList.remove("hide");
 
             if (timestamp != window.localStorage.getItem("win-timestamp")) { // Last time we won was not today
                 let winRow = getLocalStorageInt("win-row" + row);
@@ -836,6 +837,7 @@ function processWinLose() {
             document.getElementById("won-word-of-the-day1").classList.add("hide");
             document.getElementById("footer-random-word").classList.remove("hide");
             document.getElementById("footer-word-of-the-day").classList.add("hide");
+            document.getElementById("show-statistics").classList.add("hide");
         }
 
         document.getElementById("word-win").innerText = target.toUpperCase();
@@ -858,6 +860,7 @@ function processWinLose() {
             document.getElementById("won-random-word1").classList.add("hide");
             document.getElementById("footer-word-of-the-day").classList.remove("hide");
             document.getElementById("footer-random-word").classList.add("hide");
+            document.getElementById("show-statistics").classList.remove("hide");
 
             if (timestamp != window.localStorage.getItem("lose-timestamp")) { // Last time we lost was not today
                 window.localStorage.setItem("loses", getLocalStorageInt("loses") + 1);
@@ -869,6 +872,7 @@ function processWinLose() {
             document.getElementById("won-word-of-the-day1").classList.add("hide");
             document.getElementById("footer-random-word").classList.remove("hide");
             document.getElementById("footer-word-of-the-day").classList.add("hide");
+            document.getElementById("show-statistics").classList.add("hide");
         }
 
         document.getElementById("word-lose").innerText = target.toUpperCase();
