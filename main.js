@@ -62,13 +62,13 @@ function selectColorMode() {
 // ==== GAME BOARD ====
 const board = document.getElementById("board");
 for (let r = 0; r < config.maxGuesses; r++) {
-    const row = document.createElement("div");
-    row.classList.add("row");
-    board.appendChild(row);
+    const rowDiv = document.createElement("div");
+    rowDiv.classList.add("row");
+    board.appendChild(rowDiv);
     for (let c = 0; c < config.wordLength; c++) {
         const cell = document.createElement("div");
         cell.classList.add("cell");
-        row.appendChild(cell);
+        rowDiv.appendChild(cell);
     }
 }
 
@@ -275,7 +275,7 @@ document.getElementById("colorblind-mode").addEventListener("change", ev => {
 })
 
 // ==== GAME LOGIC ====
-let row, guess, win, target = "";
+let row = 0, guess = "", win = false, lose = false, target = "";
 let scoring = false;
 let timestamp;
 let gameMode;
@@ -450,10 +450,6 @@ function alertBox(text) {
 function initGame() {
     console.log("initGame");
 
-    row = 0;
-    guess = "";
-    win = false;
-
     resetCellsAndKeyboard();
 
     creditPoints = getLocalStorageInt("credit-points");
@@ -511,6 +507,13 @@ function initGame() {
             else { // Target from store is valid
                 console.log("Use pre-selected random word");
                 loadGame();   
+
+                /* If we have a completed random game, reset it */
+                console.log(win, lose);
+                if ((win == true) || (lose == true)) { // The previous random game got completed (won or losed), start a new one
+                    localStorage.setItem("random-timestamp", 0); // Invalidate target to make sure the game gets reset
+                    window.location.href = "index.htm"; // reload page
+                }
             }
         }
 
@@ -519,16 +522,16 @@ function initGame() {
     }   
 
     else { // Word of the day
-        timestamp = getLocalStorageInt("wotd-timestamp");
-        target = rot13(localStorage.getItem("wotd-target"));
+        timestamp = getLocalStorageInt("word-of-the-day-timestamp");
+        target = rot13(localStorage.getItem("word-of-the-day-target"));
         console.log("wotd timestamp From Store: " + timestamp);
         if (timestamp == 0) { // Timestamp invalid
             console.log("timestamp is 0, use new wotd word");
             timestamp = getTodaysTimestamp();
             target = get_WordOfTheDay_FromServer(timestamp);
 
-            localStorage.setItem("wotd-target", rot13(target));
-            localStorage.setItem("wotd-timestamp", timestamp);
+            localStorage.setItem("word-of-the-day-target", rot13(target));
+            localStorage.setItem("word-of-the-day-timestamp", timestamp);
             resetGame();
         }
         else { // Timestamp valid
@@ -536,7 +539,7 @@ function initGame() {
                 if ((target == "") || (target == null)) {  // Target from store is invalid
                     console.log("Target from store is invalid! => new game");
                     target = get_WordOfTheDay_FromServer(getTodaysTimestamp());
-                    localStorage.setItem("wotd-target", rot13(target));
+                    localStorage.setItem("word-of-the-day-target", rot13(target));
                     resetGame();
                 }
                 else { // Target from store is valid
@@ -547,8 +550,8 @@ function initGame() {
                 console.log("New Day, new game");
                 timestamp = getTodaysTimestamp();
                 target = get_WordOfTheDay_FromServer(getTodaysTimestamp());
-                localStorage.setItem("wotd-target", rot13(target));
-                localStorage.setItem("wotd-timestamp", timestamp);
+                localStorage.setItem("word-of-the-day-target", rot13(target));
+                localStorage.setItem("word-of-the-day-timestamp", timestamp);
                 resetGame();
             }
         }
@@ -639,22 +642,17 @@ function resetCellsAndKeyboard() {
 
 function resetGame() {
     console.log("resetGame");
-    row = 0;
-    guess = "";
-    win = false;
 }
 
 
 function loadGame() {
     console.log("loadGame");
-    row = 0;
-    guess = "";
-    win = false;
 
 //     console.log("Loading words from " + row + " rows...");
 
     for (let r = 0; r < config.maxGuesses; r++) {
         let rowTextFromStore = localStorage.getItem(gameMode + "_" + "row" + r);
+        console.log("line for row " + r + " loaded from store: " + rowTextFromStore + ", len: " + rowTextFromStore.length);
         if (rowTextFromStore != null && rowTextFromStore != "") {
             guess = rowTextFromStore.toLowerCase();
             let scores = scoreGuess(target, guess);
@@ -673,11 +671,21 @@ function loadGame() {
 
             if ((r < localStorage.getItem(gameMode + "_" + "row")) && (rowTextFromStore.length == config.wordLength)) {
                 evaluate();
+                processWinLose();
             }
+            else {
+                console.log("row incomplete => break");
+                break;
+            }
+        }
+        else {
+            console.log("line for row " + r + " loaded from store null or empty => break");
+            break;
         }
     }
     
     row = getLocalStorageInt(gameMode + "_" + "row");
+    console.log("loadGame, row: " + row);
 }
 
 
@@ -757,11 +765,12 @@ function updateShownStats() {
 
 
 function evaluate() {
-//     console.log("target: " + target, ", guess: " + guess, "row: ", row);
+    console.log("evaluate, target: " + target, ", guess: " + guess, ", row: ", row);
     scoring = true;
     setTimeout(() => scoring = false, animTime * 4);
     let scores = scoreGuess(target, guess);
 
+    /* Show animation */
     for (let i = 0; i < config.wordLength; i++) {
         const savedRow = row, savedGuess = guess;
         setTimeout(() => {
@@ -769,10 +778,29 @@ function evaluate() {
             keyboardEls[savedGuess[i]].classList.add(scores[i]);
         }, animTime * i);
     }
-    if (scores.every(s => s == "correct")) { // Win
-        win = true;
-        let newCreditPoints = 0;
 
+    row++;
+
+//     console.log(row, config.maxGuesses);
+    if (scores.every(s => s == "correct")) { // Win
+        console.log("Game won");
+        win = true;
+    }
+    else if (row == config.maxGuesses) { // Lose
+        console.log("Game lost");
+        lose = true;
+    }
+    else {
+        console.log("Game incomplete", );
+        guess = "";
+    }
+}
+
+
+
+function processWinLose() {
+    if (win == true) { // Game got won
+        let newCreditPoints = 0;
         if (gameMode == "word-of-the-day") { /* Word of the day */
             document.getElementById("won-word-of-the-day1").classList.remove("hide");
             document.getElementById("won-random-word1").classList.add("hide");
@@ -821,11 +849,7 @@ function evaluate() {
             setInterval(timeToNextWord, 1000);
         }, animTime * 5)
     }
-
-    row++;
-    guess = "";
-
-    if (row >= config.maxGuesses && !win) { // Lose
+    else if (lose == true) { // Game got lost
         document.getElementById("share").classList.add("hide");
         document.getElementById("telegram").classList.add("hide");
 
@@ -857,6 +881,9 @@ function evaluate() {
             timeToNextWord();
             setInterval(timeToNextWord, 1000);
         }, animTime * 5)
+    }
+    else { // Game not complete yet
+        // Nothing to do
     }
 }
 
@@ -919,6 +946,7 @@ document.addEventListener("keydown", e => {
             return;
         }
         evaluate();
+        processWinLose();
         storeProgess();
         return;
     }
