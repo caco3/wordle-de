@@ -655,7 +655,7 @@ function loadGame() {
         if (rowTextFromStore == null) {
             rowTextFromStore = "";
         }
-        console.log(rowTextFromStore);
+      
         console.log("line for row " + r + " loaded from store: '" + rowTextFromStore + "', len: " + rowTextFromStore.length);
         if (rowTextFromStore != null && rowTextFromStore != "") {
             guess = rowTextFromStore.toLowerCase();
