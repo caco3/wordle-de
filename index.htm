@@ -43,10 +43,9 @@
 
 <body>
     <header>
-        <button id="show-settings" class="minimal">&#9881;</button>
-        <h1>Beta <b><span style="font-size: 120%; color: #6abe00;">W</span>OR<span style="color: #fbce31;">DL</span>E</b> auf Deutsch mit Umlauten (&auml;&ouml;&uuml;)</h1>
-<!--         <button id="show-info" class="minimal"><span style="font-size: 200%"><strong>&#8505;&#65039;</strong></span></button> -->
-        <button id="show-info" class="minimal">&#8505;&#65039;</button>
+        <button id="show-settings" class="minimal"><img src=gear.png width=40px height=40px></button>
+        <h1><b><span style="font-size: 120%; color: #6abe00;">W</span>OR<span style="color: #fbce31;">DL</span>E</b> auf Deutsch mit Umlauten (&auml;&ouml;&uuml;)</h1>
+        <button id="show-info" class="minimal"><img src=info.png width=40px height=40px></button>
     </header>
     <div id="board"></div>
     <div id="keyboard"></div>
@@ -126,10 +125,11 @@
         <span class="popup">
             <div id="dismiss-update-info" class="close-button">&#10062;</div>
             <h2>Neuigkeiten</h2>
-            <h3>26. Februar 2022</h3>
+            <h3>02. M&auml;rz 2022</h3>
             <ul>
                 <li><p>Es kann nun jederzeit zwischen dem Wort-des-Tages und dem Zufälligen Wort umgeschaltet werden, ohne, dass etwas verloren geht.</p></li>
                 <li><p>Neuer Farbmodus für Farbenblinde.</p></li>
+<!--                 <li><p> TODO Die Kriterien für mögliche "W&ouml;rter-des-Tages" sind nun dokumentiert (Siehe Info-Mem&uuml;).</p></li> -->
             </ul>
             <h3>12. Februar 2022</h3>
             <p>Zeige dein super Resultat in der Telegram-Trophäen-Gruppe.</p>
@@ -157,12 +157,11 @@
                     <div class="cell filled incorrect">M</div>
                     <div class="cell filled incorrect">E</div>
                 </div>
-                <p>
-                    <strong>Gr&uuml;ne Buchstaben sich richtig.</strong><br>
-                    Sie sind auch im Wort-des-Tages an dieser Stelle.<br>
-                    <strong>Gelbe Buchstaben sind fast richtig.</strong><br>
-                    Sie sind im Wort-des-Tages enthalten, aber an einer anderen Stelle.<br>
-                    <strong>Graue Buchstaben sind falsch.</strong><br>
+                <p><strong><span class="key correct" style="height:25px; width: 250px;">Diese</span> Buchstaben sich richtig.</strong><br>
+                    Sie sind auch im Wort-des-Tages an dieser Stelle.</p>
+                <p><strong><span class="key close" style="height:25px; width: 250px;">Diese</span> Buchstaben sind fast richtig.</strong><br>
+                    Sie sind im Wort-des-Tages enthalten, aber an einer anderen Stelle.</p>
+                <p><strong><span class="key incorrect" style="height:25px; width: 250px;">Diese</span> Buchstaben sind falsch.</strong><br>
                     Sie kommen im Wort-des-Tages nicht vor.</p>
                 <p><strong>Im Beispiel lautet das Wort "BRAUN".</strong></p>
             </details>
@@ -180,6 +179,7 @@
                 <li><p>"ss" anstatt "&szlig;" verwenden.</p></li>
                 <li><p>Bei Verben wird jeweils nur die Grundform verwenden. Z.B. "GEHEN", aber nicht "GINGE" oder "GEHST".</p></li>
                 <li><p>Es kommen keine Personennamen vor.</p></li>
+<!--                 TODO Add more details -->
                 </ul>
             </details>
             <details>
