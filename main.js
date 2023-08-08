@@ -81,7 +81,7 @@ if (board.children[0].children[0].getBoundingClientRect().width == 0) {
 const KEYBOARD_LAYOUT = config.keyboardLayout[config.language]
 const SPECIAL = {
     "Enter": "<span style=\"font-size: 150%\"><strong>✔</strong></span>",
-    "Backspace": "<span style=\"font-size: 200%\"><strong>⎌</strong></span>",
+    "Backspace": "<span style=\"font-size: 200%\"><strong>⌫</strong></span>",
 }
 
 const keyboard = document.getElementById("keyboard");
@@ -123,7 +123,7 @@ const infoContainer = document.getElementById("info-container");
 const changelogContainer = document.getElementById("update-info-container");
 
 
-let lastUpdateNote = "2022-05-01"; // Set to today on news updates
+let lastUpdateNote = "2023-08-06"; // Set to today on news updates
 if (window.localStorage.getItem("read-update-note") != lastUpdateNote && window.localStorage.getItem("read-help")) { // Show updates, but only if the help does not get shown
     changelogContainer.classList.remove("hide");
     window.localStorage.setItem("read-update-note", lastUpdateNote);
@@ -136,7 +136,7 @@ if (!window.localStorage.getItem("read-help")) {
 }
 
 
-// Debug: Call once god-menu.htm to unlock useful links in the statistics menu
+// Debug: Call once 'god.htm' to unlock useful links in the statistics menu
 if (window.localStorage.getItem("god-menu")) {
     document.getElementById("god-menu").classList.remove("hide");
 }
@@ -185,7 +185,30 @@ document.getElementById("share").addEventListener("click", ev => {
     t.textContent = text, document.body.appendChild(t), t.select(), document.execCommand("copy"), document.body.removeChild(t)
     
     document.getElementById("share").innerText = "In die Zwischenablage kopiert";
-})
+});
+
+
+document.getElementById("share_compact").addEventListener("click", ev => {
+    let letterMap = createLetterMap();
+    
+    const event = new Date(timestamp * 1000);
+    const options = { weekday: 'short', month: 'short', day: 'numeric' };
+    let dateFormated = event.toLocaleDateString('de-CH', options);
+
+    let textVersuche = ["🏆 Wow! Ich habe das heutige Wort (" + dateFormated + ") mit nur 1 Versuch erraten!",
+                      "🎉 Genial! Ich habe das heutige Wort (" + dateFormated + ") mit nur 2 Versuchen erraten!",
+                         "Juhui! Ich habe das heutige Wort (" + dateFormated + ") mit nur 3 Versuchen erraten!",
+                           "Hmm! Ich habe das heutige Wort (" + dateFormated + ") mit 4 Versuchen erraten!",
+                                "Ich habe das heutige Wort (" + dateFormated + ") mit 5 Versuchen erraten!",
+                         "🎈 Uff! Ich habe das heutige Wort (" + dateFormated + ") gerade noch mit 6 Versuchen erraten!"];
+
+    let text = textVersuche[row-1] + "\r\n" + letterMap;
+
+    var t = document.createElement("textarea");
+    t.textContent = text, document.body.appendChild(t), t.select(), document.execCommand("copy"), document.body.removeChild(t)
+    
+    document.getElementById("share_compact").innerText = "In die Zwischenablage kopiert";
+});
 
 document.getElementById("start-normal1").addEventListener("click", ev => {
     localStorage.setItem("random-mode", 0); // Switch to the normal mode on test page load
@@ -215,11 +238,28 @@ document.getElementById("settings-menu-start-random").addEventListener("click", 
     window.location.href = "index.htm"; // Reload page
 });
 
+document.getElementById("transfer-settings").addEventListener("click", ev => {
+    transfer_settings();
+});
+
+document.getElementById("transfer-settings2").addEventListener("click", ev => {
+    transfer_settings();
+});
+
+function transfer_settings() {
+    var data = JSON.stringify(JSON.stringify(localStorage));
+    data = btoa(data);
+    var url = "https://wordle.ruinelli.ch/import.php?lc=" + data;
+    window.location.href = url; // Go to new website
+}
+
+
 document.getElementById("settings-menu-export").addEventListener("click", ev => {
     var data = JSON.stringify(JSON.stringify(localStorage));
     
-    const file = new File([data], 'wordle-deutsch.export', {
-        type: 'text/plain',
+    var dateFormated = (new Date()).toISOString().slice(0,19).replace(/:/g,"-");
+    const file = new File([data], "wordle-deutsch_" + dateFormated  + ".export", {
+        type: 'application/json',
     })
     
     const link = document.createElement('a')
@@ -391,7 +431,7 @@ function createLetterMap() {
         letterMap += "\r\n";
     }
 
-    return letterMap;
+    return letterMap.slice(0, -2);
 }
 
 
@@ -882,6 +922,7 @@ function processWinLose() {
                 document.getElementById("credit-points2").innerText = creditPoints;
                 document.getElementById("credit-points3").innerText = creditPoints;
                 document.getElementById("share").classList.remove("hide");
+                document.getElementById("share_compact").classList.remove("hide");
                 document.getElementById("telegram").classList.remove("hide");
             }
 
@@ -908,6 +949,7 @@ function processWinLose() {
     }
     else if (lose == true) { // Game got lost
         document.getElementById("share").classList.add("hide");
+        document.getElementById("share_compact").classList.add("hide");
         document.getElementById("telegram").classList.add("hide");
 
         if (gameMode == "word-of-the-day") { /* Word of the day */
@@ -1070,4 +1112,5 @@ function main() {
 //     console.log(others);
     initGame();
     updateShownStats();
+    
 }
