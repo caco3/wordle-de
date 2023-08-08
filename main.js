@@ -238,20 +238,20 @@ document.getElementById("settings-menu-start-random").addEventListener("click", 
     window.location.href = "index.htm"; // Reload page
 });
 
-document.getElementById("transfer-settings").addEventListener("click", ev => {
-    transfer_settings();
-});
-
-document.getElementById("transfer-settings2").addEventListener("click", ev => {
-    transfer_settings();
-});
-
-function transfer_settings() {
-    var data = JSON.stringify(JSON.stringify(localStorage));
-    data = btoa(data);
-    var url = "https://wordle.ruinelli.ch/import.php?lc=" + data;
-    window.location.href = url; // Go to new website
-}
+// document.getElementById("transfer-settings").addEventListener("click", ev => {
+//     transfer_settings();
+// });
+// 
+// document.getElementById("transfer-settings2").addEventListener("click", ev => {
+//     transfer_settings();
+// });
+// 
+// function transfer_settings() {
+//     var data = JSON.stringify(JSON.stringify(localStorage));
+//     data = btoa(data);
+//     var url = "https://wordle.ruinelli.ch/import.php?lc=" + data;
+//     window.location.href = url; // Go to new website
+// }
 
 
 document.getElementById("settings-menu-export").addEventListener("click", ev => {
