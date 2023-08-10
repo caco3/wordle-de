@@ -14,16 +14,16 @@
 
     <link rel="manifest" href="/manifest.json">
 
-    <meta property="og:url" content="https://wordle-deutsch.ch">
+    <meta property="og:url" content="https://wordle.ruinelli.ch">
     <meta property="og:type" content="Wordle auf Deutsch mit Umlauten (&auml;&ouml;&uuml;)">
     <meta property="og:title" content="Wordle auf Deutsch mit Umlauten (&auml;&ouml;&uuml;)">
 <!--     <meta property="og:description" content="Errate ein Wort in 6 Versuchen. Jeden Tag ein neues R&auml;tsel. Mit Umlauten (&auml;&ouml;&uuml;) und kostenlos."> -->
     <meta property="og:description" content="Errate ein deutsches Wort in 6 Versuchen">
-    <meta property="og:image" content="https://wordle-deutsch.ch/logo_small.png">
+    <meta property="og:image" content="https://wordle.ruinelli.ch/logo_small.png">
     <html prefix="og: https://ogp.me/ns#">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:domain" content="wordle-deutsch.ch">
+    <meta property="twitter:domain" content="wordle.ruinelli.ch">
 
     <link rel="manifest" href="manifest.json" />
     <link href="logo-tiny.png" rel="icon shortcut" />
