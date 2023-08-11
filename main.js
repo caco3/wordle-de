@@ -1,5 +1,5 @@
 // ==== CONFIG ====
-import config from './config.js?cacheid=2';
+import config from './config.js?cacheid=2023-08-09';
 
 // ==== WORD LIST ====
 var targets, others;
@@ -17,12 +17,12 @@ async function loadJSON(filename, callback) {
     xobj.send(null);
 }
 
-loadJSON("target-words.json", function(response) {
+loadJSON("target-words.json?cacheid=2023-08-11", function(response) {
     targets = JSON.parse(response)["data"];
     main();
 });
 
-loadJSON("other-words.json", function(response) {
+loadJSON("other-words.json?cacheid=2023-08-11", function(response) {
     others = JSON.parse(response)["data"];
     main();
 });
