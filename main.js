@@ -17,7 +17,7 @@ async function loadJSON(filename, callback) {
     xobj.send(null);
 }
 
-loadJSON("target-words.json?cacheid=2023-08-09", function(response) {
+loadJSON("target-words.json?cacheid=2023-10-11", function(response) {
     targets = JSON.parse(response)["data"];
     main();
 });
