@@ -1,5 +1,5 @@
 // ==== CONFIG ====
-import config from './config.js?cacheid=2';
+import config from './config.js?cacheid=2023-08-09';
 
 // ==== WORD LIST ====
 var targets, others;
@@ -17,12 +17,12 @@ async function loadJSON(filename, callback) {
     xobj.send(null);
 }
 
-loadJSON("target-words.json", function(response) {
+loadJSON("target-words.json?cacheid=2023-08-09", function(response) {
     targets = JSON.parse(response)["data"];
     main();
 });
 
-loadJSON("other-words.json", function(response) {
+loadJSON("other-words.json?cacheid=2023-08-09", function(response) {
     others = JSON.parse(response)["data"];
     main();
 });
@@ -238,20 +238,20 @@ document.getElementById("settings-menu-start-random").addEventListener("click", 
     window.location.href = "index.htm"; // Reload page
 });
 
-document.getElementById("transfer-settings").addEventListener("click", ev => {
-    transfer_settings();
-});
-
-document.getElementById("transfer-settings2").addEventListener("click", ev => {
-    transfer_settings();
-});
-
-function transfer_settings() {
-    var data = JSON.stringify(JSON.stringify(localStorage));
-    data = btoa(data);
-    var url = "https://wordle.ruinelli.ch/import.php?lc=" + data;
-    window.location.href = url; // Go to new website
-}
+// document.getElementById("transfer-settings").addEventListener("click", ev => {
+//     transfer_settings();
+// });
+// 
+// document.getElementById("transfer-settings2").addEventListener("click", ev => {
+//     transfer_settings();
+// });
+// 
+// function transfer_settings() {
+//     var data = JSON.stringify(JSON.stringify(localStorage));
+//     data = btoa(data);
+//     var url = "https://wordle.ruinelli.ch/import.php?lc=" + data;
+//     window.location.href = url; // Go to new website
+// }
 
 
 document.getElementById("settings-menu-export").addEventListener("click", ev => {
