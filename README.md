@@ -9,3 +9,4 @@ Play with it on https://wordle.ruinelli.ch
 ## Word lists
  - https://wikipedia.de, crawled by http://www.aaabbb.de/WordList/WordList.php
  - https://www.openthesaurus.de/about/download
+ - Various user contributions
