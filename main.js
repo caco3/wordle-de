@@ -1,5 +1,5 @@
 // ==== CONFIG ====
-import config from './config.js?cacheid=2023-08-09';
+import config from './config.js?cacheid=2024-06-02';
 
 // ==== WORD LIST ====
 var targets, others;
@@ -17,12 +17,12 @@ async function loadJSON(filename, callback) {
     xobj.send(null);
 }
 
-loadJSON("target-words.json?cacheid=2023-10-11", function(response) {
+loadJSON("target-words.json?cacheid=2024-06-02", function(response) {
     targets = JSON.parse(response)["data"];
     main();
 });
 
-loadJSON("other-words.json?cacheid=2023-08-09", function(response) {
+loadJSON("other-words.json?cacheid=2024-06-02", function(response) {
     others = JSON.parse(response)["data"];
     main();
 });
@@ -123,7 +123,7 @@ const infoContainer = document.getElementById("info-container");
 const changelogContainer = document.getElementById("update-info-container");
 
 
-let lastUpdateNote = "2023-08-06"; // Set to today on news updates
+let lastUpdateNote = "2024-06-02"; // Set to today on news updates
 if (window.localStorage.getItem("read-update-note") != lastUpdateNote && window.localStorage.getItem("read-help")) { // Show updates, but only if the help does not get shown
     changelogContainer.classList.remove("hide");
     window.localStorage.setItem("read-update-note", lastUpdateNote);
