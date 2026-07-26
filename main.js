@@ -123,7 +123,7 @@ const infoContainer = document.getElementById("info-container");
 const changelogContainer = document.getElementById("update-info-container");
 
 
-let lastUpdateNote = "2026-07-11"; // Set to today on news updates
+let lastUpdateNote = "2026-07-26"; // Set to today on news updates
 if (window.localStorage.getItem("read-update-note") != lastUpdateNote && window.localStorage.getItem("read-help")) { // Show updates, but only if the help does not get shown
     changelogContainer.classList.remove("hide");
     window.localStorage.setItem("read-update-note", lastUpdateNote);
@@ -1041,7 +1041,7 @@ document.addEventListener("keydown", e => {
         return;
     }
     if (key == "Enter") {
-        if (guess.length != config.wordLength || !(targets.includes(guess) || others.includes(guess))) {
+        if (guess.length != config.wordLength || !(guess == target || targets.includes(guess) || others.includes(guess))) {
             board.children[row].classList.add("shake");
             setTimeout(() => board.children[row].classList.remove("shake"), 400);
             return;
